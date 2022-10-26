@@ -1,14 +1,7 @@
-/**
- * In this file app.js you will find all CRUD functions name.
- * 
- */
+
 
 function createTask() {
-    // initialiser task form
 
-    // Afficher le boutton save
-
-    // Ouvrir modal form
 
     document.getElementById("save").style.display = "block"
     document.getElementById("update").style.display = "none"
@@ -16,25 +9,19 @@ function createTask() {
 }
 
 function saveTask() {
-    // Recuperer task attributes a partir les champs input
 
-    // Créez task object
-
-    // Ajoutez object au Array
-
-    // refresh tasks
     const form = document.getElementById("form");
     form.addEventListener('submit', (e) => {
 
-        // to stop reload fo page
+
         e.preventDefault();
-        var title = document.getElementById("title").value;
-        var priority = document.getElementById("priority").value;
-        var status = document.getElementById("status").value;
-        var date = document.getElementById("date").value;
-        var description = document.getElementById("description").value;
-        var type = document.querySelector('input[name="type"]:checked').value;
-        var task = {
+        let title = document.getElementById("title").value;
+        let priority = document.getElementById("priority").value;
+        let status = document.getElementById("status").value;
+        let date = document.getElementById("date").value;
+        let description = document.getElementById("description").value;
+        let type = document.querySelector('input[name="type"]:checked').value;
+        let task = {
             title: title,
             priority: priority,
             status: status,
@@ -52,10 +39,9 @@ function saveTask() {
 }
 
 function editTask(index) {
-    // Initialisez task form
+
     $("#modal-task").modal("show")
-    // Affichez updates
-    console.log(tasks[index - 1])
+
     document.getElementById("title").value = tasks[index - 1].title;
     document.getElementById("priority").value = tasks[index - 1].priority;
     document.getElementById("status").value = tasks[index - 1].status;
@@ -69,35 +55,23 @@ function editTask(index) {
     }
     document.getElementById("save").style.display = "none"
     document.getElementById("update").style.display = "block"
-    // Delete Button
 
+    //concatenation
     document.getElementById("update").setAttribute("onclick", "updateTask(" + (index - 1) + ")")
-    // Définir l’index en entrée cachée pour l’utiliser en Update et Delete
 
-    // Definir FORM INPUTS
-
-    // Ouvrir Modal form
 
 }
 
 function updateTask(index) {
-    // GET TASK ATTRIBUTES FROM INPUTS
 
-    // Créez task object
 
-    // Remplacer ancienne task par nouvelle task
-
-    // Fermer Modal form
-
-    // Refresh tasks
-
-    var title = document.getElementById("title").value;
-    var priority = document.getElementById("priority").value;
-    var status = document.getElementById("status").value;
-    var date = document.getElementById("date").value;
-    var description = document.getElementById("description").value;
-    var type = document.querySelector('input[name="type"]:checked').value;
-    var task = {
+    let title = document.getElementById("title").value;
+    let priority = document.getElementById("priority").value;
+    let status = document.getElementById("status").value;
+    let date = document.getElementById("date").value;
+    let description = document.getElementById("description").value;
+    let type = document.querySelector('input[name="type"]:checked').value;
+    let task = {
         title: title,
         priority: priority,
         status: status,
@@ -112,24 +86,13 @@ function updateTask(index) {
 }
 
 function deleteTask(index) {
-    // Get index of task in the array
 
-    // Remove task from array by index splice function
-
-    // close modal form
-
-    // refresh tasks
 
     tasks.splice(index - 1, 1);
     reloadTasks();
 
 }
 
-function initTaskForm() {
-    // Clear task form from data
-
-    // Hide all action buttons
-}
 
 function reloadTasks() {
     let cont_todo = 0,
@@ -147,23 +110,29 @@ function reloadTasks() {
 
     document.querySelector("#in-progress-tasks").innerHTML = '';
     const inp = document.querySelector("#in-progress-tasks");
-
+    /// talle for (let i=0; i<tasks.length;i++)
     tasks.forEach((task) => {
         cont_all++;
-
+        let parent;
         if (task.status === "To Do") {
             icon = `bi bi-question-circle-fill`;
+            parent = Todo;
+            cont_todo++;
 
         } if (task.status === "Done") {
             icon = `bi bi-check2-square`;
+            parent = dt;
+            cont_done++;
 
         } if (task.status === "In Progress") {
+            parent = inp;
+            cont_inpr++;
             icon = `spinner-border spinner-border-sm `;
 
         }
 
 
-
+        //template 
         let content = `<button class="w-100 border-0 " >
         <div class="">
             <i class=""></i> 
@@ -171,7 +140,7 @@ function reloadTasks() {
         <div class="row"> 
             <div class="col-1 py-3"><i class="bi ${icon} text-green fs-4"></i>
             <i class="bi bi-pencil-square text-primary fs-4" onclick="editTask(${cont_all})"></i>
-            <i id="${cont_all}" class="bi bi-x-circle-fill text-danger fs-4" onclick="deleteTask(${cont_all})"></i> 
+            <i class="bi bi-x-circle-fill text-danger fs-4" onclick="deleteTask(${cont_all})"></i> 
             </div>
             <div class="col-11 py-3">
         <div class="text-start">
@@ -189,20 +158,20 @@ function reloadTasks() {
     </div>
     </button>`;
 
+        //condition 
+        // if (task.status === "To Do") {
+        //     cont_todo++;
+        //     Todo.innerHTML += content;
 
-        if (task.status === "To Do") {
-            cont_todo++;
-            Todo.innerHTML += content;
+        // } if (task.status === "Done") {
+        //     cont_done++;
+        //     dt.innerHTML += content;
+        // } if (task.status === "In Progress") {
+        //     cont_inpr++;
+        //     inp.innerHTML += content;
+        // }
 
-        } if (task.status === "Done") {
-            cont_done++;
-            dt.innerHTML += content;
-        } if (task.status === "In Progress") {
-            cont_inpr++;
-            inp.innerHTML += content;
-        }
-
-
+        parent.innerHTML += content;
 
 
 
